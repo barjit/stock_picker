@@ -4,17 +4,19 @@ def stock_picker (stock_prices)
   sell_index = 0
   max_profit = 0
 
-  stock_prices.each do |i|
-    stock_prices.each do |j|
-      if j - i > max_profit
+  stock_prices.each_with_index do |buy, i|
+    stock_prices[(i+1)..-1].each_with_index do |sell, j|
+      if (sell - buy) > max_profit
+        sell_index = j + (i + 1)
         buy_index = i
-        sell_index = j
-        max_profit = i - j
+
+        max_profit = sell - buy
       end
     end
   end
 
-  return "Maximum profit is #{max_profit}, buy on day #{buy_index}, sell on day #{sell_index}"
   
+  result = []
+  result.push(buy_index, sell_index)
 
 end
